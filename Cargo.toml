@@ -1,0 +1,30 @@
+[package]
+name        = "mohu-compute"
+version     = "0.1.0"
+edition     = "2024"
+license     = "MIT"
+description = "SIMD-accelerated compute kernels — reductions, element-wise ops, casts, and bitmap validity"
+repository  = "https://github.com/mohu-org/mohu-compute"
+homepage    = "https://github.com/mohu-org/mohu-compute"
+keywords    = ["simd", "array", "compute", "numerics", "parallel"]
+categories  = ["science", "mathematics"]
+
+[dependencies]
+num-traits  = "0.2"
+rayon       = "1.10"
+thiserror   = "2"
+
+[features]
+simd   = []
+avx512 = ["simd"]
+
+[profile.release]
+opt-level     = 3
+lto           = "thin"
+strip         = true
+panic         = "abort"
+
+[profile.bench]
+inherits = "release"
+strip    = false
+debug    = true
